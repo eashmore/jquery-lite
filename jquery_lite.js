@@ -1,4 +1,12 @@
 (function(){
+  var _docReadyFuncs = [];
+
+  document.addEventListener('DOMContentLoaded', function() {
+    docReadyFuncs.forEach(function(func) {
+      func();
+    });
+  });
+
   $l = function (arg) {
     var nodeArray = [];
     if (typeof arg === "string") {
@@ -9,6 +17,8 @@
       }
     } else if (typeof arg === "object") {
       nodeArray.push(arg);
+    } else if (typeof arg === 'function') {
+      _docReadyFuncs.push(arg);
     }
 
     var nodeCollection = new DOMNodeCollection(nodeArray);
@@ -17,6 +27,17 @@
 
   var DOMNodeCollection = function(array) {
     this.nodes = array;
+  };
+
+  $l.extend = function(base) {
+    var args = [].slice.call(arguments, 1);
+    args.forEach(function(arg){
+      Object.keys(arg).forEach(function(key){
+        base[key] = arg[key];
+      });
+    });
+
+    return combinedObject;
   };
 
   DOMNodeCollection.prototype.html = function(str) {
