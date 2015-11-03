@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>jQuery Lite</title>
+
+    <script type="text/javascript" src="jquery_lite.js"></script>
+  </head>
+  <body>
+    <div class="my-div cool">
+      <a>HI</a>
+      <p>p</p>
+    </div>
+
+    <script type="text/javascript">
+      (function(){
+        var p = $l("p");
+        p.append(p);
+      })();
+    </script>
+  </body>
+</html>
