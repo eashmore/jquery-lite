@@ -72,7 +72,7 @@
   };
 
   DOMNodeCollection.prototype.removeClass = function(oldClass) {
-    this.node.forEach(function(node) {
+    this.nodes.forEach(function(node) {
       node.classList.remove(oldClass);
     });
   };
