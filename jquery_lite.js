@@ -115,9 +115,22 @@
         node.parentNode.removeChild(node);
       }.bind(this));
     } else {
+      console.log(this);
       this.nodes.forEach(function(node) {
         node.parentNode.removeChild(node);
       });
     }
+  };
+
+  DOMNodeCollection.prototype.on = function(eventName, callback) {
+    this.nodes.forEach(function(node) {
+      node.addEventListener(eventName, callback);
+    }.bind(this));
+  };
+
+  DOMNodeCollection.prototype.off = function(eventName, callback) {
+    this.nodes.forEach(function(node) {
+      node.removeEventListener(eventName, callback);
+    });
   };
 })();
