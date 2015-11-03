@@ -40,6 +40,32 @@
     return combinedObject;
   };
 
+  $l.ajax = function(options) {
+    var defaults = {
+      success: function() {},
+      error: function() {},
+      url: "",
+      method: "GET",
+      data: {},
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+    };
+
+    var requestParams = $l.extend(defaults, options);
+
+    var xmlhttp = new XMLRequest();
+    xmlhttp.onreadystatechange = function() {
+      if (xmlhttp.readyState === XMLHttpRequest.DONE) {
+        if (xmlhttp.status === 200) {
+          requestParams.success(xmlhttp.response);
+        } else {
+          requestParams.error(xmlhttp.response);
+        }
+      }
+    };
+
+    xmlhttp.send(JSON.stringify(requestParams.data));
+  };
+
   DOMNodeCollection.prototype.html = function(str) {
     if (str) {
       this.nodes.forEach(function(el) {
