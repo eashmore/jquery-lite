@@ -76,4 +76,48 @@
       node.classList.remove(oldClass);
     });
   };
+
+  DOMNodeCollection.prototype.children = function() {
+    var children = new DOMNodeCollection([]);
+    this.nodes.forEach(function(node) {
+      for(var i = 0; i < node.children.length; i++) {
+        children.nodes.push(node.children.item(i));
+      }
+    });
+
+    return children;
+  };
+
+  DOMNodeCollection.prototype.parents = function() {
+    var parents = new DOMNodeCollection([]);
+    this.nodes.forEach(function(node) {
+      parents.nodes.push(node.parentNode);
+    });
+
+    return parents;
+  };
+
+  DOMNodeCollection.prototype.find = function(str) {
+    var results = [];
+    this.nodes.forEach(function(node) {
+      var foundNodes = node.querySelectorAll(str);
+      results = results.concat([].slice.call(foundNodes));
+    });
+
+    var collection = new DOMNodeCollection(results);
+    return collection;
+  };
+
+  DOMNodeCollection.prototype.remove = function(str) {
+    if (typeof str === 'string') {
+      var foundNodes = this.find(str);
+      foundNodes.nodes.forEach(function(node) {
+        node.parentNode.removeChild(node);
+      }.bind(this));
+    } else {
+      this.nodes.forEach(function(node) {
+        node.parentNode.removeChild(node);
+      });
+    }
+  };
 })();

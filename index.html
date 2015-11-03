@@ -7,14 +7,15 @@
     <script type="text/javascript" src="jquery_lite.js"></script>
   </head>
   <body>
-    <div class="my-div cool">
+    <div class="my-div">
       <a>HI</a>
-      <p class='remove' attr='this'>p</p>
+      <p class='p'>p</p>
     </div>
 
     <script type="text/javascript">
       (function(){
-        var p = $l("p");
+        var div = $l("div");
+        div.remove('.p');
       })();
     </script>
   </body>
