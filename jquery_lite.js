@@ -2,7 +2,7 @@
   var _docReadyFuncs = [];
 
   document.addEventListener('DOMContentLoaded', function() {
-    docReadyFuncs.forEach(function(func) {
+    _docReadyFuncs.forEach(function(func) {
       func();
     });
   });
@@ -120,13 +120,12 @@
   };
 
   DOMNodeCollection.prototype.attr = function(str, value) {
-    var attribute = this.nodes[0].getAttribute(str);
-    if (typeof value === 'string') {
+    if (value === undefined) {
+      return this.nodes[0].getAttribute(str);
+    } else {
       this.nodes.forEach(function(node) {
         node.setAttribute(str, value);
       });
-    } else {
-      return attribute;
     }
   };
 
@@ -146,7 +145,7 @@
     var children = new DOMNodeCollection([]);
     this.nodes.forEach(function(node) {
       for(var i = 0; i < node.children.length; i++) {
-        children.nodes.push(node.children.item(i));
+        children.nodes.push(node.children[i]);
       }
     });
 
@@ -180,7 +179,6 @@
         node.parentNode.removeChild(node);
       }.bind(this));
     } else {
-      console.log(this);
       this.nodes.forEach(function(node) {
         node.parentNode.removeChild(node);
       });

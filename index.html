@@ -11,11 +11,15 @@
       <a>HI</a>
       <p class='p'>p</p>
     </div>
+    <div id="div2">
+      2
+    </div>
 
     <script type="text/javascript">
       (function(){
-        var $div = $l("div");
-        $div.on("click", function() {console.log('click')});
+        var $div = $l('.my-div');
+        var $div2 = $l('#div2');
+        $div.children();
       })();
     </script>
   </body>
