@@ -41,12 +41,12 @@
 
   $l.ajax = function(options) {
     var defaults = {
-      success: function() {},
-      error: function() {},
       url: '',
       method: 'GET',
       data: {},
-      contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
+      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      success: function() {},
+      error: function() {}
     };
 
     var requestParams = $l.extend(defaults, options);
@@ -62,10 +62,10 @@
     };
 
     xmlhttp.open(requestParams.method, requestParams.url, true);
-    if (requestParams.method === 'GET' || requestParams.method === 'get') {
+    if (requestParams.method.match(/get/i)) {
       xmlhttp.send();
     } else {
-      xhttp.setRequestHeader('Content-type', requestParams.method);
+      xhttp.setRequestHeader('Content-type', requestParams.contentType);
       xmlhttp.send(JSON.stringify(requestParams.data));
     }
   };
