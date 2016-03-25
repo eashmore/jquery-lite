@@ -37,7 +37,7 @@
       });
     });
 
-    return combinedObject;
+    return base;
   };
 
   $l.ajax = function(options) {
@@ -63,7 +63,13 @@
       }
     };
 
-    xmlhttp.send(JSON.stringify(requestParams.data));
+    xmlhttp.open(requestParams.method, requestParams.url, true);
+    if (requestParams.method === "GET" || requestParams.method === "get") {
+      xmlhttp.send();
+    } else {
+      xhttp.setRequestHeader("Content-type", requestParams.method);
+      xmlhttp.send(JSON.stringify(requestParams.data));
+    }
   };
 
   DOMNodeCollection.prototype.html = function(str) {
