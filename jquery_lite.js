@@ -44,7 +44,7 @@
       url: '',
       method: 'GET',
       data: {},
-      contentType: 'application/x-www-form-urlencoded; charset=UTF-8',
+      contentType: 'application/x-www-form-urlencoded',
       success: function() {},
       error: function() {}
     };
