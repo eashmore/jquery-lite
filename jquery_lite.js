@@ -9,13 +9,12 @@
 
   $l = function (arg) {
     var nodeArray = [];
-    if (typeof arg === "string") {
+    if (typeof arg === 'string') {
       var els = document.querySelectorAll(arg);
-
       for (var i = 0; i < els.length; i++) {
         nodeArray.push(els[i]);
       }
-    } else if (typeof arg === "object") {
+    } else if (typeof arg === 'object') {
       nodeArray.push(arg);
     } else if (typeof arg === 'function') {
       _docReadyFuncs.push(arg);
@@ -44,14 +43,13 @@
     var defaults = {
       success: function() {},
       error: function() {},
-      url: "",
-      method: "GET",
+      url: '',
+      method: 'GET',
       data: {},
       contentType: 'application/x-www-form-urlencoded; charset=UTF-8'
     };
 
     var requestParams = $l.extend(defaults, options);
-
     var xmlhttp = new XMLRequest();
     xmlhttp.onreadystatechange = function() {
       if (xmlhttp.readyState === XMLHttpRequest.DONE) {
@@ -64,10 +62,10 @@
     };
 
     xmlhttp.open(requestParams.method, requestParams.url, true);
-    if (requestParams.method === "GET" || requestParams.method === "get") {
+    if (requestParams.method === 'GET' || requestParams.method === 'get') {
       xmlhttp.send();
     } else {
-      xhttp.setRequestHeader("Content-type", requestParams.method);
+      xhttp.setRequestHeader('Content-type', requestParams.method);
       xmlhttp.send(JSON.stringify(requestParams.data));
     }
   };
@@ -83,14 +81,12 @@
   };
 
   DOMNodeCollection.prototype.empty = function() {
-    this.html("");
-
+    this.html('');
     this.nodes = [];
   };
 
   DOMNodeCollection.prototype.append = function(arg) {
     var html;
-
     if (typeof arg === 'string') {
       this.nodes.forEach(function(el) {
         html = el.innerHTML;
@@ -106,9 +102,25 @@
     }
   };
 
+  DOMNodeCollection.prototype.prepend = function(arg) {
+    var html;
+    if (typeof arg === 'string') {
+      this.nodes.forEach(function(el) {
+        html = el.innerHTML;
+        el.innerHTML = arg + html;
+      });
+    } else if (typeof arg === 'object') {
+      this.nodes.forEach(function(el) {
+        html = el.innerHTML;
+        arg.nodes.forEach(function(collectionEl) {
+          el.innerHTML = collectionEl.outerHTML + html;
+        });
+      });
+    }
+  };
+
   DOMNodeCollection.prototype.attr = function(str, value) {
     var attribute = this.nodes[0].getAttribute(str);
-
     if (typeof value === 'string') {
       this.nodes.forEach(function(node) {
         node.setAttribute(str, value);
